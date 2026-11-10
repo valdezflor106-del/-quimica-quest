@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuimicaQuest TIC - Juego Completo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="card">
+
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80" alt="Laboratorio de química">
+    <div class="banner-text">
+      <h1>⚗️ QuimicaQuest TIC</h1>
+      <p>Aprende Química Jugando 🧪</p>
+    </div>
+  </div>
+
+  <div class="personajes"><span>👩‍🔬</span><span>🧪</span><span>⚛️</span><span>👨‍🔬</span></div>
+
+  <!-- INICIO -->
+  <div id="p-inicio">
+    <p class="sub">Unidad 1 - 70 preguntas: 35 Principiante + 35 Medio | Nivel Alto: Próximamente</p>
+    <label>Tu alias:</label>
+    <input id="alias" placeholder="Ej: Ana_TIC">
+    <button class="btn" onclick="empezar('practica')">🎮 PRÁCTICA INDIVIDUAL</button>
+    <button class="btn btn3" onclick="mostrar('p-instrucciones')">📖 VER INSTRUCCIONES</button>
+    <hr>
+    <h2 style="text-align:center; color:#f59e0b;">🏆 JUGAR EN GRUPO</h2>
+    <button class="btn btn2" onclick="crearReto()">✨ CREAR RETO EN GRUPO - Generar Código</button>
+    <p id="codigoGenerado" style="text-align:center; font-size:18px; font-weight:bold; color:#22d3ee;"></p>
+    <label>Código del reto de tu grupo:</label>
+    <input id="codigoUnirse" placeholder="Ej: QUIM-4829">
+    <button class="btn btn2" onclick="unirseReto()">🔗 UNIRSE CON CÓDIGO</button>
+    <button class="btn btn3" onclick="verRanking()">📊 Ver Clasificación del Reto</button>
+    <small><b>Principiante:</b> Nomenclatura, Conversiones, Estequiometría, Números cuánticos, Configuración, Tabla periódica.<br><b>Medio:</b> Fuerzas intermoleculares, Soluciones, % m/m, % m/v, % v/v, ppm, Molaridad, Molalidad, Fracción molar, Coligativas.<br>Fuentes: Brown et al. Química: la ciencia central | Chang & Goldsby, Química | Petrucci et al. Química General.</small>
+    <div class="footer-img"><img src="https://images.unsplash.com/photo-1554475901-4538ddfbccc2?w=800&q=80" alt="Química"><small>🧬 Nomenclatura • ⚛️ Tabla Periódica • 🧪 Soluciones • 💧 Coligativas</small></div>
+  </div>
+
+  <!-- INSTRUCCIONES -->
+  <div id="p-instrucciones" class="hidden">
+    <h1>📖 Instrucciones</h1>
+    <div class="personajes"><span>👩‍🔬</span><span>📖</span><span>🧪</span><span>👨‍🔬</span></div>
+    <div style="background:#0f172a; padding:16px; border-radius:14px; line-height:1.6;">
+      <h2>🎮 ¿Cómo se juega?</h2>
+      <p>1️⃣ Escribe tu <b>alias</b>.<br>2️⃣ Elige <b>Práctica</b> o <b>Jugar en Grupo</b>.<br>3️⃣ Cada partida tiene <b>15 a 24 preguntas al azar</b>, sin repetir.<br>4️⃣ Mitad <b>Principiante</b> y mitad <b>Medio</b>.<br>5️⃣ Tienes <b>3 vidas ❤️</b> y <b>2 intentos</b> por pregunta.</p>
+      <h2>⭐ Puntuación</h2>
+      <p>✅ 1er intento: <b>100 pts</b><br>✅ 2do intento: <b>50 pts</b><br>❌ Fallas los 2: <b>0 pts y pierdes 1 vida</b><br>💡 Pista: <b>-20 pts</b><br>Sin vidas, la partida termina.</p>
+      <h2>🏆 Juego en Grupo</h2>
+      <p>1️⃣ Uno crea el reto y le sale un código: <b>QUIM-4829</b><br>2️⃣ Lo comparte por WhatsApp.<br>3️⃣ Todos ponen el <b>mismo código</b> y se unen.<br>4️⃣ <b>Todos juegan las MISMAS preguntas</b>.<br>5️⃣ Gana el de <b>más aciertos</b>. Empate: gana el de <b>menos tiempo</b>.</p>
+      <h2>📚 Temas</h2>
+      <p><b>Principiante:</b> Nomenclatura, Conversiones, Estequiometría, Números cuánticos, Configuración, Tabla periódica.<br><b>Medio:</b> Fuerzas intermoleculares, Soluciones, % m/m, % m/v, % v/v, ppm, Molaridad, Molalidad, Fracción molar, Coligativas.</p>
+      <h2>⚠️ Reglas</h2>
+      <p>✔️ Se permite calculadora.<br>✔️ Lee la retroalimentación cuando te equivocas.<br>✔️ Usa alias, no datos personales.</p>
+    </div>
+    <button class="btn" onclick="mostrar('p-inicio')">⬅ VOLVER AL INICIO</button>
+    <button class="btn btn2" onclick="empezar('practica')">🎮 ¡A JUGAR!</button>
+  </div>
+
+  <!-- JUEGO -->
+  <div id="p-juego" class="hidden">
+    <div><span class="badge" id="nivelTxt"></span> <span class="badge" id="temaTxt"></span> <span class="badge">❤️ <span id="vidasTxt"></span></span> <span class="badge">⭐ <span id="puntosTxt">0</span></span></div>
+    <p id="progreso"></p><div class="bar"><div class="fill" id="barra"></div></div>
+    <h2 id="pregunta"></h2><div id="opciones"></div>
+    <button class="btn btn2" id="btnPista" onclick="darPista()">💡 Pista (-20 pts)</button>
+    <div id="retro" class="feedback hidden"></div>
+    <button class="btn hidden" id="btnSiguiente" onclick="siguiente()">Siguiente ➡</button>
+    <button class="btn btn3" onclick="mostrar('p-instrucciones')">📖 Ver Instrucciones</button>
+  </div>
+
+  <!-- FINAL -->
+  <div id="p-final" class="hidden">
+    <h2>🎉 ¡Terminaste!</h2><p id="resumen"></p><p id="temasRepasar"></p>
+    <button class="btn" onclick="empezar(modoActual)">🔁 Otra Partida</button>
+    <button class="btn btn2" onclick="verRanking()">🏆 Clasificación</button>
+    <button class="btn btn3" onclick="mostrar('p-inicio')">🏠 Inicio</button>
+  </div>
+
+  <!-- RANKING -->
+  <div id="p-ranking" class="hidden">
+    <h2>🏆 Clasificación - Reto</h2><p><small>Desempate: 1) Más aciertos, 2) Menos tiempo.</small></p>
+    <table><thead><tr><th>#</th><th>Alias</th><th>Puntos</th><th>Aciertos</th><th>Tiempo</th></tr></thead><tbody id="tablaRanking"></tbody></table>
+    <button class="btn" onclick="mostrar('p-inicio')">⬅ Volver</button>
+  </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
